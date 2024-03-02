@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const mgmSchema = new mongoose.Schema({
     mgmData: {
-        type: Number,
+        type: String,
         required: true,
     }
 })
