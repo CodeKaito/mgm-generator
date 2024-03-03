@@ -45,6 +45,7 @@ async function inviaCodiceMGM() {
     const newMGMCode = await response.json();
 
     console.log('Nuovo codice MGM generato:', newMGMCode);
+    alert("Nuovo codice MGM generato");
   } catch (error) {
     console.error('Errore durante l\'invio del codice MGM:', error.message);
   }
