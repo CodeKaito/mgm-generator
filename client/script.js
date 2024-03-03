@@ -12,7 +12,7 @@ async function generaCodiceMGM() {
     console.log(data);
 
     // Verifica che ci siano dati disponibili
-    if (data && data.length > 0) {
+    if (data) {
       // Estrai casualmente un valore dall'array di dati
       const valoreCasuale = data[Math.floor(Math.random() * data.length)].mgmData;
 
