@@ -1,25 +1,15 @@
-const apiUrl = 'https://mgm-generator-api.onrender.com/api/get';
-const apiSaveUrl = 'https://mgm-generator-api.onrender.com/api/save/';
+const apiUrl = 'http://localhost:5001/api/get/';
+const apiSaveUrl = 'http://localhost:5001/api/save/';
 
 let createCode = document.getElementById('createCode');
 let getCode = document.getElementById('getCode');
 
-async function getData() {
+async function generaCodiceMGM() {
   try {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
-    console.log('Dati ricevuti:', data);
-    return data; // Restituisci i dati ricevuti
-  } catch (error) {
-    console.error('Errore durante la richiesta API:', error.message);
-    throw error; // Rilancia l'errore per gestirlo in modo appropriato
-  }
-}
-
-async function generaCodiceMGM() {
-  try {
-    const data = await getData();
+    console.log(data);
 
     // Verifica che ci siano dati disponibili
     if (data && data.length > 0) {
@@ -28,6 +18,7 @@ async function generaCodiceMGM() {
 
       // Assegna il valore all'input desiderato
       getCode.value = valoreCasuale;
+
     } else {
       console.error('Nessun dato disponibile per generare il codice MGM.');
     }
