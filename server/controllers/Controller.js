@@ -5,13 +5,17 @@ module.exports.getMGMData = async (req, res) => {
         // Esegui la logica della tua richiesta di fetch qui
         const mgmData = await MGMDataModel.find();
 
-        // Incrementa il count e gestisci isValid per ciascun oggetto fetchato
+        // Incrementa il count e gestisci isValid per l'oggetto specifico fetchato
         for (const mgmObject of mgmData) {
-            
-            if (mgmObject.count === 5) {
+            const { objectId, count } = mgmObject; // Assumi che nel frontend ci sia un identificativo univoco chiamato "objectId"
+
+            if (count === 5) {
                 mgmObject.isValid = false;
             } else {
-                mgmObject.count++;
+                // Verifica se l'oggetto è stato fetchato nel frontend
+                if (req.body.fetchedObjects.includes(objectId)) {
+                    mgmObject.count++;
+                }
             }
             await mgmObject.save(); // Salva le modifiche nel database
         }

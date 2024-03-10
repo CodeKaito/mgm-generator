@@ -1,5 +1,7 @@
-const apiUrl = 'http://localhost:5001/api/get/';
-const apiSaveUrl = 'http://localhost:5001/api/save/';
+// COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+
+const apiUrl = 'https://mgm-generator-api.onrender.com/api/get';
+const apiSaveUrl = 'https://mgm-generator-api.onrender.com/api/save';
 
 let createCode = document.getElementById('createCode');
 let getCode = document.getElementById('getCode');
@@ -9,18 +11,21 @@ async function generaCodiceMGM() {
     const response = await fetch(apiUrl);
     const data = await response.json();
 
-    console.log(data);
+    // Filtra solo gli oggetti con isValid a true
+    const validObjects = data.filter(obj => obj.isValid === true);
+
+    console.log(validObjects);
 
     // Verifica che ci siano dati disponibili
-    if (data) {
-      // Estrai casualmente un valore dall'array di dati
-      const valoreCasuale = data[Math.floor(Math.random() * data.length)].mgmData;
+    if (validObjects.length > 0) {
+      // Estrai casualmente un valore dall'array di dati validi
+      const valoreCasuale = validObjects[Math.floor(Math.random() * validObjects.length)].mgmData;
 
       // Assegna il valore all'input desiderato
       getCode.value = valoreCasuale;
-
     } else {
-      console.error('Nessun dato disponibile per generare il codice MGM.');
+      console.error('Nessun dato valido disponibile per generare il codice MGM.');
+      alert("Nessun dato valido disponibile per generare il codice MGM");
     }
   } catch (error) {
     // Gestisci gli errori durante la richiesta o la generazione del codice
@@ -31,7 +36,7 @@ async function generaCodiceMGM() {
 async function inviaCodiceMGM() {
   try {
     const postData = {
-        mgmData: createCode.value, // Ottieni il valore dall'input utente
+      mgmData: createCode.value, // Ottieni il valore dall'input utente
     };
 
     const response = await fetch(apiSaveUrl, {
